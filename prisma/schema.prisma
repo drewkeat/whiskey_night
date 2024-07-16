@@ -13,3 +13,20 @@ datasource db {
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
+
+model Whiskey {
+  id            Int      @id @default(autoincrement())
+  whiskyId      String?
+  name          String
+  description   String?
+  whiskyImg     String?
+  whiskyLink    String
+  distillery    String?
+  countryRegion String?
+  type          String?
+  age           String?
+  abv           String?
+  bottler       String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
+}

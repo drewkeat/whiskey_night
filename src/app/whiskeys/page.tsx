@@ -1,30 +1,25 @@
 import { Typography } from "@mui/material";
 import { createClient } from "@/utils/supabase/server";
+import { PrismaClient } from '@prisma/client'
 
-const supabase = createClient()
+const prisma = new PrismaClient()
 
-async function getWhiskeys(){
-  let { data: whiskeys, error } = await supabase
-    .from('whiskeys')
-    .select()
-    if(whiskeys){
-      return whiskeys
-    }
-    console.error(error)
+const getUsers = async() => {
+  // Run inside `async` function
+  const allUsers = await prisma.user.findMany()
+  console.log(allUsers)
+  return allUsers
 }
 
-export default function WhiskeyList() {
- async function listWhiskeys(){
-  const whiskeys = await getWhiskeys()
-  return whiskeys?.map(whiskey => <li key={whiskey.id}>{whiskey.name}</li>)
- }
-
+export default async function WhiskeyList() {
+  async function listUsers(){
+    const users = await getUsers()
+    return users.map(u => <li key={u.id}>{u.email} - {u.name}</li>)
+  }
   return (
     <div>
       <Typography variant="h3" color="green" align="center">Whiskey List</Typography>
-      <ul>
-        {listWhiskeys()}
-      </ul>
+      <ul>{listUsers()}</ul>
     </div>
   )
 }

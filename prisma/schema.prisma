@@ -28,5 +28,5 @@ model Whiskey {
   abv           String?
   bottler       String?
   createdAt     DateTime @default(now())
-  updatedAt     DateTime @default(now()) @updatedAt
+  updatedAt     DateTime? @updatedAt
 }

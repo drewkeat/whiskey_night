@@ -5,8 +5,12 @@ const prisma = new PrismaClient()
 
 export default async function WhiskeyList() {
   async function listWhiskeys(){
-    const whiskeys = await prisma.whiskey.findMany()
-    return whiskeys.map(w => <li key={w.id}><a href={w.whiskyLink}>{w.name}</a></li>)
+    try {
+      const whiskeys = await prisma.whiskey.findMany()
+      return whiskeys.map(w => <li key={w.id}><a href={w.whiskyLink}>{w.name}</a></li>)
+    } catch (error) {
+      console.error(error)
+    }
   }
   return (
     <div>

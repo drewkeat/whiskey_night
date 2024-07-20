@@ -11,7 +11,12 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 
-export default function SignUpForm({switchForm, ...props}: {switchForm: () => void}) {
+export default function SignUpForm({
+  switchForm,
+  ...props
+}: {
+  switchForm: () => void;
+}) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -43,7 +48,7 @@ export default function SignUpForm({switchForm, ...props}: {switchForm: () => vo
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign up
           </Typography>
           <Box
             component="form"
@@ -87,7 +92,7 @@ export default function SignUpForm({switchForm, ...props}: {switchForm: () => vo
               </Grid>
               <Grid item>
                 <Link onClick={switchForm} variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"Already have an account? Sign In"}
                 </Link>
               </Grid>
             </Grid>

@@ -6,12 +6,15 @@ import { useState } from "react"
 function LoginFormContainer() {
   const [hasAccount, setHasAccount] = useState(true)
 
-  return (
-    <div>
-      <div>LoginForm</div>
-      {hasAccount ? <SignInForm switchForm={() => setHasAccount(!hasAccount)} /> : <SignUpForm switchForm={() => setHasAccount(!hasAccount)} />}
-    </div>
-  )
+  if(hasAccount){
+    return (
+      <SignInForm switchForm={() => setHasAccount(!hasAccount)} />
+    )
+  } else {
+    return (
+      <SignUpForm switchForm={() => setHasAccount(!hasAccount)} />
+    )
+  }
 }
 
 export default LoginFormContainer

@@ -21,12 +21,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <CssBaseline />
-        <Container id="main-wrapper"
-          sx={{ display: "flex", flexDirection: "column", height: "100%" }}
+        <Container
+          id="main-wrapper"
+          sx={{ flex: 1}}
         >
           {children}
-          <Copyright />
         </Container>
+        <Copyright />
       </body>
     </html>
   );

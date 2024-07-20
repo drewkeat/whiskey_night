@@ -74,7 +74,6 @@ export default function SignUpForm({
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
             />
             <Button
               type="submit"
@@ -85,11 +84,6 @@ export default function SignUpForm({
               Sign Up
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
                 <Link onClick={switchForm} variant="body2">
                   {"Already have an account? Sign In"}

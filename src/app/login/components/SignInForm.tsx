@@ -100,7 +100,7 @@ export default function SignInForm({
               </Grid>
               <Grid item>
                 <Link onClick={switchForm} variant="body2">
-                  {"Already have an account? Sign In"}
+                  {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>

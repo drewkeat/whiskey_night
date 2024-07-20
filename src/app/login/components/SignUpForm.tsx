@@ -10,37 +10,14 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { createClient } from "@/utils/supabase/client";
-
-const supabase = createClient()
+import { signup } from "../actions";
 
 async function handleSubmit(event: React.FormEvent<HTMLFormElement>){
   event.preventDefault();
   const data = new FormData(event.currentTarget);
-  const email = data.get("email")!.toString()
-  const password = data.get("password")!.toString()
-  const userData = {email, password}
-  if(!userData){
-    console.error("No Form Data")
-  } else {
-    console.log(userData);
-    const user = await signUpNewUser(userData)
-    console.log("User:", user)
-  }
+  signup(data)
+  
 };
-
-async function signUpNewUser(credentials: {email: string, password: string}) {
-  const { data, error } = await supabase.auth.signUp({
-    ...credentials,
-    options: {
-      emailRedirectTo: 'http://localhost:3000/whiskeys',
-    },
-  })
-  if(error){
-    throw new Error(error.message)
-  }
-  return data
-}
 
 export default function SignUpForm({
   switchForm,

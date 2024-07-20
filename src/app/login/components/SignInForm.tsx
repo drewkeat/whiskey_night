@@ -10,30 +10,14 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { createClient } from "@/utils/supabase/client";
+import {login} from "../actions"
 
-const supabase = createClient()
 
 async function handleSubmit(event: React.FormEvent<HTMLFormElement>){
   event.preventDefault();
   const data = new FormData(event.currentTarget);
-  const credentials = {
-    email: data.get("email")!.toString(),
-    password: data.get("password")!.toString()
-  }
-  console.log(credentials);
-  const user = await signInWithSupabase(credentials)
-  console.log(user)
+  login(data)
 };
-
-async function signInWithSupabase(credentials: {email: string, password: string}){
-  const {data, error} = await supabase.auth.signInWithPassword(credentials)
-  if(data){
-    return data
-  }
-  console.error(error)
-  throw Error(error?.message)
-}
 
 export default function SignInForm({
   switchForm,

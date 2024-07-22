@@ -1,5 +1,16 @@
 html, body {
   height: 100%;
+}
+
+body {
   display: flex;
   flex-flow: column;
+}
+
+#main-wrapper {
+  flex: 1
+}
+
+a {
+  cursor: pointer;
 }

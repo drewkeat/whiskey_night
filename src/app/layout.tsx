@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { CssBaseline, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import "./globals.css";
 
 import Copyright from "@/components/Copyright";
@@ -20,13 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <CssBaseline />
-        <Container
-          id="main-wrapper"
-          sx={{ flex: 1}}
-        >
-          {children}
-        </Container>
+        <Container id="main-wrapper">{children}</Container>
         <Copyright />
       </body>
     </html>

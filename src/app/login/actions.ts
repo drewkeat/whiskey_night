@@ -30,12 +30,16 @@ export async function signup(formData: FormData) {
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
+  const meta = {
+    firstName: formData.get('first-name') as string,
+    lastName: formData.get('last-name') as string,
+  }
   const data = {
     email: formData.get('email') as string,
     password: formData.get('password') as string,
   }
 
-  const { error } = await supabase.auth.signUp(data)
+  const { error } = await supabase.auth.signUp({...data, options: {data: meta}})
 
   if (error) {
     redirect('/error')

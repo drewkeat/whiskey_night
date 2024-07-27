@@ -55,6 +55,23 @@ export default function SignUpForm({
             onSubmit={handleSubmit}
             sx={{ mt: 1 }}
           >
+            <Grid container justifyContent={'space-between'} spacing={"0"} columnSpacing={0}>
+              <Grid item component={TextField}
+                margin="normal"
+                required
+                id="first-name"
+                label="First Name"
+                name="first-name"
+                autoFocus
+              />
+              <Grid item component={TextField}
+                margin="normal"
+                required
+                id="last-name"
+                label="Last Name"
+                name="last-name"
+              />
+            </Grid>
             <TextField
               margin="normal"
               required
@@ -63,7 +80,6 @@ export default function SignUpForm({
               label="Email Address"
               name="email"
               autoComplete="email"
-              autoFocus
             />
             <TextField
               margin="normal"

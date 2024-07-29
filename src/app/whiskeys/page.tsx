@@ -1,25 +1,27 @@
 import { Typography, Container } from "@mui/material";
-import { PrismaClient } from "@prisma/client";
+import { createClient } from "@/utils/supabase/server";
+import { Database } from "@/types/supabase_types";
 
-const prisma = new PrismaClient()
+const supabase = createClient();
 
 export default async function WhiskeyList() {
-  async function listWhiskeys(){
-    try {
-      const whiskeys = await prisma.whiskey.findMany()
-      return whiskeys.map(w => <li key={w.id}><a href={w.whiskyLink}>{w.name}</a></li>)
-    } catch (error) {
-      console.error(error)
-    }
+  async function listWhiskeys() {
+    const { error, data } = await supabase.from("whiskey").select();
+    error && console.error("error", error)
+    return data?.map((w) => (
+      <li key={w.id}>
+        <a href={w.whiskeyLink || undefined}>{w.name}</a>
+      </li>
+    ));
   }
   return (
     <div>
-      <Typography variant="h3" color="green" align="center">Whiskey List</Typography>
+      <Typography variant="h3" color="green" align="center">
+        Whiskey List
+      </Typography>
       <Container maxWidth="md">
-        <ul>
-          {listWhiskeys()}
-        </ul>
+        <ul>{listWhiskeys()}</ul>
       </Container>
     </div>
-  )
+  );
 }

@@ -6,8 +6,17 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
 import axios from "npm:axios"
 import * as cheerio from "npm:cheerio"
+import { createClient } from 'jsr:@supabase/supabase-js@2'
+
+console.log(Deno.env.get('SUPABAS_URL'))
 
 Deno.serve(async (req) => {
+  const authHeader = req.headers.get('Authorization')!
+  const supabaseClient = createClient(
+    Deno.env.get('SUPABASE_URL') ?? '',
+    Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+    { global: { headers: { Authorization: authHeader } } }
+  )
   const { url } = await req.json()
   const html = (await axios.get(url)).data
   const $ = cheerio.load(html)
@@ -28,6 +37,8 @@ Deno.serve(async (req) => {
   const data = {
     name, type, distillery, location, description, whiskeyImg, whiskeyLink, age, abv, style, caskType, flavorProfile
   }
+
+  await supabaseClient.from('whiskey').insert(data)  
 
   return new Response(
     JSON.stringify(data),

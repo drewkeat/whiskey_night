@@ -34,14 +34,20 @@ Deno.serve(async (req) => {
   const caskType = $('.detail.cask-type .value').text()
   const flavorProfile = $('.js-flavor-profile-chart').data('flavors')
 
-  const data = {
+  const obj = {
     name, type, distillery, location, description, whiskeyImg, whiskeyLink, age, abv, style, caskType, flavorProfile
   }
 
-  await supabaseClient.from('whiskey').insert(data)  
+  const {data, error} = await supabaseClient.from('whiskey').insert(obj)  
 
+  if(data){
+      return new Response(
+        JSON.stringify(data),
+        { headers: { "Content-Type": "application/json" } },
+      )
+  }
   return new Response(
-    JSON.stringify(data),
+    JSON.stringify(error),
     { headers: { "Content-Type": "application/json" } },
   )
 })

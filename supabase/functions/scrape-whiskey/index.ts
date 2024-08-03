@@ -10,6 +10,7 @@ import { createClient } from 'jsr:@supabase/supabase-js@2'
 
 console.log(Deno.env.get('SUPABAS_URL'))
 
+
 Deno.serve(async (req) => {
   const authHeader = req.headers.get('Authorization')!
   const supabaseClient = createClient(
@@ -17,6 +18,25 @@ Deno.serve(async (req) => {
     Deno.env.get('SUPABASE_ANON_KEY') ?? '',
     { global: { headers: { Authorization: authHeader } } }
   )
+
+  const uploadImage = async (name: string, imgUrl: string) => {
+    const response = await fetch(imgUrl)
+    const imgData = await response.arrayBuffer()
+    const imgBlob = new Blob([imgData], { type: 'image/jpeg' })
+    const imgFile = new File([imgBlob], `${name}-${Date.now()}.jpg`, { type: 'image/jpeg' });
+
+    if (imgData){
+      console.log(imgData)
+      const {data, error} = await supabaseClient.storage.from('imgs').upload("whiskey-pics/"+name, imgFile)
+      if(error){
+        console.error(error)
+        return {path: null}
+      }
+      return data 
+    }
+    return {path: null}
+  }
+
   const { url } = await req.json()
   const html = (await axios.get(url)).data
   const $ = cheerio.load(html)
@@ -34,8 +54,11 @@ Deno.serve(async (req) => {
   const caskType = $('.detail.cask-type .value').text()
   const flavorProfile = $('.js-flavor-profile-chart').data('flavors')
 
+  const imgData = await uploadImage(name, whiskeyImg)
+  console.log(imgData)
+  
   const obj = {
-    name, type, distillery, location, description, whiskeyImg, whiskeyLink, age, abv, style, caskType, flavorProfile
+    name, type, distillery, location, description, whiskeyImg: imgData.path, whiskeyLink, age, abv, style, caskType, flavorProfile
   }
 
   const {data, error} = await supabaseClient.from('whiskey').insert(obj)  

@@ -2,6 +2,7 @@
   "name": "whiskey_night",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "clear-cache": "rm -rf .next/cache prisma/client",
@@ -11,7 +12,8 @@
     "pmigrate:dev": "dotenv -e .env.local -- npx prisma migrate dev",
     "migrate:dev": "dotenv -e .env.local -- supabase migration up",
     "migrate:prod": "dotenv -e .env.production -- npx prisma migrate deploy",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "scrape-seed": "dotenv -e .env.local -- node supabase/scrape-seed.js"
   },
   "dependencies": {
     "@emotion/cache": "^11.13.0",
@@ -22,6 +24,7 @@
     "@mui/material-nextjs": "^5.16.4",
     "@supabase/ssr": "^0.4.0",
     "@supabase/supabase-js": "^2.44.3",
+    "axios": "^1.7.3",
     "dotenv-cli": "^7.4.2",
     "next": "14.2.4",
     "react": "^18",

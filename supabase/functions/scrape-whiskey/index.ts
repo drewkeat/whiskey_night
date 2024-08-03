@@ -8,9 +8,6 @@ import axios from "npm:axios"
 import * as cheerio from "npm:cheerio"
 import { createClient } from 'jsr:@supabase/supabase-js@2'
 
-console.log(Deno.env.get('SUPABAS_URL'))
-
-
 Deno.serve(async (req) => {
   const authHeader = req.headers.get('Authorization')!
   const supabaseClient = createClient(
@@ -19,14 +16,13 @@ Deno.serve(async (req) => {
     { global: { headers: { Authorization: authHeader } } }
   )
 
-  const uploadImage = async (name: string, imgUrl: string) => {
+  const uploadImage = async (name: string, imgUrl: string): Promise<{path: string|null}> => {
     const response = await fetch(imgUrl)
     const imgData = await response.arrayBuffer()
     const imgBlob = new Blob([imgData], { type: 'image/jpeg' })
     const imgFile = new File([imgBlob], `${name}-${Date.now()}.jpg`, { type: 'image/jpeg' });
 
     if (imgData){
-      console.log(imgData)
       const {data, error} = await supabaseClient.storage.from('imgs').upload("whiskey-pics/"+name, imgFile)
       if(error){
         console.error(error)
@@ -74,15 +70,3 @@ Deno.serve(async (req) => {
     { headers: { "Content-Type": "application/json" } },
   )
 })
-
-/* To invoke locally:
-
-  1. Run `supabase start` (see: https://supabase.com/docs/reference/cli/supabase-start)
-  2. Make an HTTP request:
-
-  curl -i --location --request POST 'http://127.0.0.1:54321/functions/v1/scrape-whiskey' \
-    --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \
-    --header 'Content-Type: application/json' \
-    --data '{"name":"Functions"}'
-
-*/

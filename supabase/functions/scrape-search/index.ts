@@ -19,49 +19,21 @@ Deno.serve(async (req) => {
     `https://distiller.com/search?term=${searchTerm}`,
   ).then((r) => r.data);
 
-  const uploadImage = async (
-    name: string,
-    imgUrl: string,
-  ): Promise<{ path: string | null }> => {
-    const response = await fetch(imgUrl);
-    const imgData = await response.arrayBuffer();
-    const imgBlob = new Blob([imgData], { type: "image/jpeg" });
-    const imgFile = new File([imgBlob], `${name}-${Date.now()}.jpg`, {
-      type: "image/jpeg",
-    });
-
-    if (imgData) {
-      const { data, error } = await supabaseClient.storage.from("imgs").upload(
-        "whiskey-pics/thumbnails/" + name,
-        imgFile,
-      );
-      if (error) {
-        console.error(error);
-        return { path: null };
-      }
-      return data;
-    }
-    return { path: null };
-  };
-
   if (html) {
     const $ = cheerio.load(html);
     const results = $(".results-container li.spirit");
     const entries = await Promise.all([...results].map(async (item) => {
-
-      const itemName = $(item).find(".name-content").text().trim()
-      const imgLink = $(item).find(".image").attr("style")?.match(
-        /background-image: *url *\((.+?)\)/,
-      )?.[1] || ""
-
-      const imgData = await uploadImage(itemName+"-thumbnail", imgLink)
-
+      
+      const link = $(item).find("a").attr("href")
+      const { data, error } = await supabaseClient.functions.invoke('scrape-whiskey', {
+        body: { url: "https://distiller.com/"+link },
+      })
+      if(error){
+        console.error(error)
+        return ("Could not fetch " + link)
+      }
       return (
-        {
-          name: itemName,
-          link: $(item).find("a").attr("href"),
-          imgLink: imgData.path,
-        }
+        data
       );
     }));
 

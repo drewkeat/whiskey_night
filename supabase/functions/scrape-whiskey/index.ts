@@ -57,11 +57,11 @@ Deno.serve(async (req) => {
     name, type, distillery, location, description, whiskeyImg: imgData.path, whiskeyLink, age, abv, style, caskType, flavorProfile
   }
 
-  const {data, error} = await supabaseClient.from('whiskey').insert(obj)  
+  const {data, error} = await supabaseClient.from('whiskey').insert(obj).select()
 
   if(data){
       return new Response(
-        JSON.stringify(data),
+        JSON.stringify(data[0]),
         { headers: { "Content-Type": "application/json" } },
       )
   }

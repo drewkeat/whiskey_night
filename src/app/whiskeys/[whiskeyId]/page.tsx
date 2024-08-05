@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 // import { Database, Tables } from "@/types/supabase_types";
 export async function getStaticParams() {
   const whiskeys = await getAllWhiskeys()
-  return whiskeys.map((w) => ({ whiskeyId: w }));
+  return whiskeys?.map((w) => ({ whiskeyId: w }));
 }
 
 type whiskeyProps = {

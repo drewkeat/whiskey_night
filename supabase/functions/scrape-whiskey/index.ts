@@ -34,6 +34,7 @@ Deno.serve(async (req) => {
   }
 
   const { url } = await req.json()
+  console.log(url)
   const html = (await axios.get(url)).data
   const $ = cheerio.load(html)
 

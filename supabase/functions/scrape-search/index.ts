@@ -14,14 +14,15 @@ Deno.serve(async (req) => {
     { global: { headers: { Authorization: authHeader } } },
   );
 
-  const searchTerm: string = await req.json().then((data) => data.term);
+  const searchTerm: string = await req.json();
+  console.log(searchTerm)
   const html: string = await axios.get(
     `https://distiller.com/search?term=${searchTerm}`,
   ).then((r) => r.data);
 
   if (html) {
     const $ = cheerio.load(html);
-    const results = $(".results-container li.spirit");
+    const results = $(".results-container li.spirit.whiskey-content");
     const entries = await Promise.all([...results].map(async (item) => {
       
       const link = $(item).find("a").attr("href")

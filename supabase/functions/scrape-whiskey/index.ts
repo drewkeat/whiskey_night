@@ -1,8 +1,3 @@
-// Follow this setup guide to integrate the Deno language server with your editor:
-// https://deno.land/manual/getting_started/setup_your_environment
-// This enables autocomplete, go to definition, etc.
-
-// Setup type definitions for built-in Supabase Runtime APIs
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
 import axios from "npm:axios"
 import * as cheerio from "npm:cheerio"
@@ -16,6 +11,16 @@ Deno.serve(async (req) => {
     { global: { headers: { Authorization: authHeader } } }
   )
 
+  const duplicateCheck = async (urlToCheck:string) => {
+    const {data, error} = await supabaseClient.from('whiskey').select('whiskeyLink')
+    if(error){
+      console.error(error)
+      return
+    }
+    const existingLinks =  data.map((item: {whiskeyLink: string}) => item.whiskeyLink)
+    return existingLinks.includes(urlToCheck) ? true : false
+  }
+  
   const uploadImage = async (name: string, imgUrl: string): Promise<{path: string|null}> => {
     const response = await fetch(imgUrl)
     const imgData = await response.arrayBuffer()
@@ -35,6 +40,10 @@ Deno.serve(async (req) => {
 
   const { url } = await req.json()
   console.log(url)
+  if(await duplicateCheck(url)){
+    console.log("Duplicate record exists")
+    return new Response(JSON.stringify("Duplicate Bottle Exists"))
+  }
   const html = (await axios.get(url)).data
   const $ = cheerio.load(html)
 
@@ -51,7 +60,7 @@ Deno.serve(async (req) => {
   const caskType = $('.detail.cask-type .value').text()
   const flavorProfile = $('.js-flavor-profile-chart').data('flavors')
 
-  const imgData = await uploadImage(name, whiskeyImg)
+  const imgData = whiskeyImg ? await uploadImage(name, whiskeyImg) : {path: ''}
   console.log(imgData)
   
   const obj = {

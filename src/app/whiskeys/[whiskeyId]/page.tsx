@@ -1,35 +1,32 @@
 import { getWhiskeyById, getAllWhiskeys } from "@/utils/supabase/queries";
+import { notFound } from "next/navigation";
 import {Database, Tables, Enums} from "@/types/supabase_types"
 
-export async function getStaticPaths() {
+// This function generates the dynamic paths for static generation
+export async function generateStaticParams() {
   const whiskeys = await getAllWhiskeys();
 
   // Ensure that whiskeys is an array and map to the required format
   const paths = whiskeys?.map((w) => ({
-    params: { whiskeyId: w.id.toString() }, // Assuming w has an id property
+    whiskeyId: w.id.toString(), // Assuming w has an id property
   })) || [];
 
-  return { paths, fallback: false }; // Set fallback to true if you want to handle new IDs
+  return paths.map((path) => ({ params: path })); // Return in the required format
 }
 
-export async function getStaticProps({ params }: { params: { whiskeyId: string } }) {
-  const whiskey = await getWhiskeyById(params.whiskeyId);
+// The main component for the whiskey page
+export default async function Whiskey({ params }: { params: { whiskeyId: string } }) {
+  const whiskey: Tables<"whiskey"> | undefined = await getWhiskeyById(params.whiskeyId);
 
   if (!whiskey) {
-    return { notFound: true }; // Return notFound for a 404 page
+    return notFound(); // Return a 404 page if whiskey not found
   }
 
-  return {
-    props: {
-      whiskey,
-    },
-  };
-}
-
-type WhiskeyProps = {
-  whiskey: Tables<'whiskey'>; // Define the type according to your whiskey structure
-};
-
-export default function Whiskey({ whiskey }: WhiskeyProps) {
-  return <>{JSON.stringify(whiskey)}</>; // Render the whiskey data as needed
+  return (
+    <div>
+      <h1>{whiskey.name}</h1>
+      {/* Render other whiskey details here */}
+      <pre>{JSON.stringify(whiskey, null, 2)}</pre> {/* For debugging */}
+    </div>
+  );
 }

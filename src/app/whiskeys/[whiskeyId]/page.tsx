@@ -1,5 +1,5 @@
 import { getWhiskeyById, getAllWhiskeys } from "@/utils/supabase/queries";
-import { notFound } from "next/navigation";
+import {Database, Tables, Enums} from "@/types/supabase_types"
 
 export async function getStaticPaths() {
   const whiskeys = await getAllWhiskeys();
@@ -27,7 +27,7 @@ export async function getStaticProps({ params }: { params: { whiskeyId: string }
 }
 
 type WhiskeyProps = {
-  whiskey: any; // Define the type according to your whiskey structure
+  whiskey: Tables<'whiskey'>; // Define the type according to your whiskey structure
 };
 
 export default function Whiskey({ whiskey }: WhiskeyProps) {

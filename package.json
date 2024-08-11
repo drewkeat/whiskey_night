@@ -9,11 +9,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "pmigrate:dev": "dotenv -e .env.local -- npx prisma migrate dev",
-    "migrate:dev": "dotenv -e .env.local -- supabase migration up",
-    "migrate:prod": "dotenv -e .env.production -- npx prisma migrate deploy",
-    "postinstall": "prisma generate",
-    "scrape-seed": "dotenv -e .env.local -- node supabase/scrape-seed.js"
+    "db:migrate-local": "dotenv -e .env.local -- supabase migration up",
+    "db:push": "supabase db push",
+    "scrape-seed": "dotenv -e .env.local -- node supabase/seed/scrape-seed.js",
+    "scrape-seed-by-name": "dotenv -e .env.local -- node supabase/seed/scrape-seed-by-name.js"
   },
   "dependencies": {
     "@emotion/cache": "^11.13.0",

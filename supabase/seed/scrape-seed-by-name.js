@@ -3,15 +3,15 @@ import { createClient } from "@supabase/supabase-js";
 
 const initialBottles = [
   "Teeling Single Grain",
-  "Dewars  15 year Blended Scotch ",
+  "Dewars  15 year Blended Scotch",
   "Nikka Coffey Single Grain",
   "Defiant Single Malt",
   "The Family Jones Ella Jones (rye)",
   "Bulleit 10 year Rye",
-  "High West American Prairie ",
+  "High West American Prairie",
   "High West Double Rye",
   "High West Rendezvous Rye",
-  "Michter's Bourbon ",
+  "Michter's Bourbon",
   "Koval Bourbon",
   "Koval Rye",
   "Koval Four Grain",
@@ -28,7 +28,7 @@ const initialBottles = [
   "Uncle Nearest 1884 Small Batch Whiskey",
   "Rowan's Creek Bourbon Whiskey",
   "Spirit Hound Straight Malt Whiskey",
-  "Rittenhouse Rye and Mile High Spirits ",
+  "Rittenhouse Rye and Mile High Spirits",
   "Tenjaku  Pure Malt",
   "Kamaki Intense Single Malt"
 ];
@@ -43,13 +43,15 @@ const runScrape = async (term) => {
   const {data, error} = (await supabase.functions.invoke('scrape-search', {body: term}))
   if(error){
     console.log(error)
-    return
+    return error
   }
   console.log("created data", data)
+  return data
 };
 
 await Promise.all(initialBottles.map(async (bottle) => {
   console.log("Running scrape for " + bottle);
-  await runScrape(bottle);
+  const res = await runScrape(bottle);
+  console.log(JSON.stringify(res))
 }));
 

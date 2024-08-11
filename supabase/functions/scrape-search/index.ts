@@ -13,6 +13,9 @@ Deno.serve(async (req) => {
     Deno.env.get("SUPABASE_ANON_KEY") ?? "",
     { global: { headers: { Authorization: authHeader } } },
   );
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders })
+  }
 
   const searchTerm: string = await req.json();
   console.log(searchTerm)
@@ -27,7 +30,7 @@ Deno.serve(async (req) => {
       
       const link = $(item).find("a").attr("href")
       const { data, error } = await supabaseClient.functions.invoke('scrape-whiskey', {
-        body: { url: "https://distiller.com/"+link },
+        body: { url: "https://distiller.com"+link },
       })
       if(error){
         console.error(error)

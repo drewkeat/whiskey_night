@@ -11,13 +11,13 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { signup } from "../actions";
+import { useMediaQuery, useTheme } from "@mui/material";
 
-async function handleSubmit(event: React.FormEvent<HTMLFormElement>){
+async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
-  signup(data)
-  
-};
+  signup(data);
+}
 
 export default function SignUpForm({
   switchForm,
@@ -25,6 +25,9 @@ export default function SignUpForm({
 }: {
   switchForm: () => void;
 }) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
     <Grid
       container
@@ -55,22 +58,28 @@ export default function SignUpForm({
             onSubmit={handleSubmit}
             sx={{ mt: 1 }}
           >
-            <Grid container justifyContent={'space-between'} spacing={"0"} columnSpacing={0}>
-              <Grid item component={TextField}
-                margin="normal"
-                required
-                id="first-name"
-                label="First Name"
-                name="first-name"
-                autoFocus
-              />
-              <Grid item component={TextField}
-                margin="normal"
-                required
-                id="last-name"
-                label="Last Name"
-                name="last-name"
-              />
+            <Grid container spacing={isMobile ? 0 : 2}>
+              <Grid item xs={12} sm={6}> {/* Full width on mobile, half on small and up */}
+                <TextField
+                  required
+                  fullWidth
+                  id="first-name"
+                  label="First Name"
+                  name="first-name"
+                  margin="normal"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}> {/* Full width on mobile, half on small and up */}
+                <TextField
+                  required
+                  fullWidth
+                  id="last-name"
+                  label="Last Name"
+                  name="last-name"
+                  margin="normal"
+                />
+              </Grid>
             </Grid>
             <TextField
               margin="normal"

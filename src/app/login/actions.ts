@@ -42,6 +42,8 @@ export async function signup(formData: FormData) {
   const { error } = await supabase.auth.signUp({...data, options: {data: meta}})
 
   if (error) {
+    //TODO: INSERT ERROR HANDLING HERE
+    console.log("Sign Up Error: ", error)
     redirect('/error')
   }
 

@@ -1,13 +1,17 @@
 import {createClient} from "../../utils/supabase/server"
 import Typography from '@mui/material/Typography'
 
-export default async function UserBadge() {
+interface UserBadgeProps{
+  sx?: {},
+}
+
+export default async function UserBadge({sx}: UserBadgeProps) {
   const supabase = createClient()
   const user = await supabase.auth.getUser().then(d => d.data.user?.user_metadata)
 
   return (
-    <div>
-      <Typography variant="h3" color="initial">Welcome {user && `${user.firstName} ${user.lastName}`}</Typography>
-    </div>
+    <>
+      <Typography variant="h3" color="initial" sx={sx} >Welcome {user && `${user.firstName} ${user.lastName}`}</Typography>
+    </>
   );
 }

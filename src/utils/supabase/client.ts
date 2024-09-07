@@ -7,3 +7,7 @@ export function createClient() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   )
 }
+
+const supabaseClient = createClient()
+
+export {supabaseClient}

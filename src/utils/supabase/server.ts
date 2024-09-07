@@ -28,3 +28,7 @@ export function createClient() {
     }
   )
 }
+
+const supabaseServer = createClient()
+
+export {supabaseServer}

@@ -18,7 +18,7 @@ function LogoutButton() {
   }
 
   return (
-    <Button variant='contained' color='primary' onClick={logout}>LogoutButton</Button>
+    <Button variant='contained' color='secondary' onClick={logout}>LogoutButton</Button>
   )
 }
 

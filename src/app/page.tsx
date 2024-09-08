@@ -1,15 +1,23 @@
-import { Container, Typography } from "@mui/material";
+import { AppBar, Box, Container, Toolbar, Typography } from "@mui/material";
 import UserBadge from "./components/UserBadge";
 import LogoutButton from "./components/LogoutButton";
+import ErrorButton from "./components/ErrorButton";
 
 export default function Home() {
   return (
     <>
-      <Container disableGutters sx={{display: "flex"}}>
-        <UserBadge />
-        <LogoutButton />
-      </Container>
-      <Typography variant="h3" color={"green"} align="center">This is the home page</Typography>
+      <Box sx={{}}>
+        <AppBar position="static">
+          <Toolbar>
+            <UserBadge sx={{flexGrow: 1}} />
+            <ErrorButton />
+            <LogoutButton />
+          </Toolbar>
+        </AppBar>
+      </Box>
+      <Typography variant="h3" color={"green"} align="center">
+        This is the home page
+      </Typography>
     </>
-  )
+  );
 }

@@ -11,7 +11,7 @@ export default async function UserBadge({sx}: UserBadgeProps) {
 
   return (
     <>
-      <Typography variant="h3" color="initial" sx={sx} >Welcome {user && `${user.firstName} ${user.lastName}`}</Typography>
+      <Typography variant="h3"  sx={sx} >Welcome {user && `${user.firstName} ${user.lastName}`}</Typography>
     </>
   );
 }

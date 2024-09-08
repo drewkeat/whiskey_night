@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Container } from "@mui/material";
+import { Box } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 
@@ -26,7 +26,7 @@ export default function RootLayout({
       <AppRouterCacheProvider>
         <ThemeProvider theme={theme}>
           <body className={inter.className}>
-            <Container id="main-wrapper">{children}</Container>
+            <Box id="main-wrapper">{children}</Box>
             <Copyright />
           </body>
         </ThemeProvider>

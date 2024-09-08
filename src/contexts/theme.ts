@@ -1,6 +1,24 @@
 'use client'
 import { createTheme } from "@mui/material/styles";
-import { red } from "@mui/material/colors";
+import { ThemeOptions } from "@mui/material/styles";
 
-export const theme = createTheme({  
-})
+export const themeOptions: ThemeOptions = {
+  palette: {
+    primary: {
+      main: '#4f8b9b',
+    },
+    secondary: {
+      main: '#5E6DAA',
+    },
+    error: {
+      main: '#f44336',
+    },
+  },
+  /*typography: {
+    fontFamily: 'Roboto',
+  },*/
+};
+
+
+
+export const theme = createTheme(themeOptions)

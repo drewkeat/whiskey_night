@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 
-import "./globals.css";
+import "@/styles/globals.css";
 
 import { theme } from "../contexts/theme";
 import Copyright from "@/components/Copyright";

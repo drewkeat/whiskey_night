@@ -1,5 +1,4 @@
 import { Typography, Container } from "@mui/material";
-import { createClient } from "@/utils/supabase/server";
 
 
 export default async function WhiskeyList() {

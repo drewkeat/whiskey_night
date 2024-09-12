@@ -1,22 +1,13 @@
 'use client'
 import Typography from '@mui/material/Typography'
 import {useState, useEffect} from "react"
-import { User } from '@supabase/supabase-js';
-
-// import {createClient} from "../../utils/supabase/server"
-import getUser from './getUser'
+import { useAuth } from '@/contexts/AuthContext'
 interface UserBadgeProps{
   sx?: {},
 }
 
 export default function UserBadge({sx}: UserBadgeProps) {
-  const [user, setUser] = useState<User>()
-  useEffect(() => {
-    (async() => {
-      const data = await getUser()
-      setUser(data)
-    })()
-  }, [])
+  const {user} = useAuth()
   
 
   return (

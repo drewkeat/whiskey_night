@@ -7,7 +7,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import "@/styles/globals.css";
 
 import { theme } from "../contexts/theme";
-import AuthContextProvider from "@/contexts/AuthContext";
+import SessionContextProvider from "@/contexts/SessionContext";
 import Copyright from "@/components/Copyright";
 import NavBar from "@/components/NavBar";
 
@@ -27,13 +27,13 @@ export default function RootLayout({
     <html lang="en">
       <AppRouterCacheProvider>
         <ThemeProvider theme={theme}>
-          <AuthContextProvider>
+          <SessionContextProvider>
             <body className={inter.className}>
               <NavBar />
               <Box id="main-wrapper">{children}</Box>
               <Copyright />
             </body>
-          </AuthContextProvider>
+          </SessionContextProvider>
         </ThemeProvider>
       </AppRouterCacheProvider>
     </html>

@@ -1,7 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 
 import { createClient } from '@/utils/supabase/server'
 
@@ -39,7 +39,7 @@ export async function signup(formData: FormData) {
     password: formData.get('password') as string,
   }
 
-  const { error } = await supabase.auth.signUp({...data, options: {data: meta}})
+  const { data: {user}, error } = await supabase.auth.signUp({...data, options: {data: meta, emailRedirectTo: "https://whiskeynight.keatdev.com/"}})
 
   if (error) {
     //TODO: INSERT ERROR HANDLING HERE
@@ -47,6 +47,9 @@ export async function signup(formData: FormData) {
     redirect('/error')
   }
 
+  revalidatePath('/login', 'page')
+  revalidatePath('/login', 'layout')
+  revalidatePath('/', 'page')
   revalidatePath('/', 'layout')
   redirect('/')
 }

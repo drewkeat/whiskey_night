@@ -1,7 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 
 import { createClient } from "@/utils/supabase/server";
 
@@ -57,5 +58,6 @@ export async function signup(formData: FormData) {
   revalidatePath("/login", "layout");
   revalidatePath("/", "page");
   revalidatePath("/", "layout");
+  NextResponse.redirect("/")
   redirect("/");
 }

@@ -40,6 +40,9 @@ export async function signup(formData: FormData) {
     password: formData.get("password") as string,
   };
 
+  meta.firstName = meta.firstName.charAt(0).toUpperCase() + meta.firstName.slice(1).toLowerCase()
+  meta.lastName = meta.lastName.charAt(0).toUpperCase() + meta.lastName.slice(1).toLowerCase()
+
   const { data: { user }, error } = await supabase.auth.signUp({
     ...data,
     options: {

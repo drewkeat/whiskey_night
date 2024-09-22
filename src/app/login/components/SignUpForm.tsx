@@ -16,7 +16,8 @@ import { useMediaQuery, useTheme } from "@mui/material";
 async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
   event.preventDefault();
   const data = new FormData(event.currentTarget);
-  signup(data);
+  const res = await signup(data);
+  console.log(res)
 }
 
 export default function SignUpForm({

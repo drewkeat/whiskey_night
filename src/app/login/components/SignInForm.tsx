@@ -16,7 +16,8 @@ import {login} from "../actions"
 async function handleSubmit(event: React.FormEvent<HTMLFormElement>){
   event.preventDefault();
   const data = new FormData(event.currentTarget);
-  login(data)
+  const res = await login(data)
+  console.log(res)
 };
 
 export default function SignInForm({

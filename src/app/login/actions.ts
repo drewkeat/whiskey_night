@@ -2,8 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { NextResponse } from "next/server";
-
 import { createClient } from "@/utils/supabase/server";
 
 export async function login(formData: FormData) {
@@ -19,7 +17,8 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    redirect("/error");
+    console.log(error)
+    return (error.message)
   }
 
   revalidatePath("/", "layout");
@@ -54,13 +53,13 @@ export async function signup(formData: FormData) {
   if (error) {
     //TODO: INSERT ERROR HANDLING HERE
     console.log("Sign Up Error: ", error);
-    redirect("/error");
+    return(error.message)
   }
 
-  revalidatePath("/login", "page");
-  revalidatePath("/login", "layout");
-  revalidatePath("/", "page");
+  if (user) {
+    return (user.email)
+  }
+
   revalidatePath("/", "layout");
-  NextResponse.redirect("/")
   redirect("/");
 }

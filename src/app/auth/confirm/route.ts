@@ -1,3 +1,4 @@
+'use server'
 import { type EmailOtpType } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
@@ -25,6 +26,6 @@ export async function GET(request: NextRequest) {
   }
 
   // return the user to an error page with some instructions
-  redirectTo.pathname = '/auth/auth-code-error'
+  redirectTo.pathname = "/"
   return NextResponse.redirect(redirectTo)
 }

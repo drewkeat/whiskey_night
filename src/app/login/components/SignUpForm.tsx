@@ -12,22 +12,28 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { signup } from "../actions";
 import { useMediaQuery, useTheme } from "@mui/material";
+import { useMessageContext } from "@/contexts/MessageContext";
 
-async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-  event.preventDefault();
-  const data = new FormData(event.currentTarget);
-  const res = await signup(data);
-  console.log(res)
+
+
+interface Props {
+  switchForm: () => void;
 }
 
 export default function SignUpForm({
-  switchForm,
-  ...props
-}: {
-  switchForm: () => void;
-}) {
+  switchForm
+}: Props) {
   const theme = useTheme();
+  const {setMessage} = useMessageContext()
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const res = await signup(data);
+    setMessage(res)
+    console.log(res)
+  }
 
   return (
     <Grid

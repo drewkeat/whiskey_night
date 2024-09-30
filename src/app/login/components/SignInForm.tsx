@@ -11,14 +11,10 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import {login} from "../actions"
+import { useMessageContext } from "@/contexts/MessageContext";
 
 
-async function handleSubmit(event: React.FormEvent<HTMLFormElement>){
-  event.preventDefault();
-  const data = new FormData(event.currentTarget);
-  const res = await login(data)
-  console.log(res)
-};
+
 
 export default function SignInForm({
   switchForm,
@@ -26,7 +22,13 @@ export default function SignInForm({
 }: {
   switchForm: () => void;
 }) {
-  
+  const {setMessage} = useMessageContext()
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>){
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const res = await login(data)
+    setMessage(res)
+  };
 
   return (
     <Grid

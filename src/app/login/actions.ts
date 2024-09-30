@@ -17,8 +17,7 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    console.log(error)
-    return (error.message)
+    return ({title: "Sign In Error:", content: error.message, type: "warning"})
   }
 
   revalidatePath("/", "layout");
@@ -51,13 +50,11 @@ export async function signup(formData: FormData) {
   });
 
   if (error) {
-    //TODO: INSERT ERROR HANDLING HERE
-    console.log("Sign Up Error: ", error);
-    return(error.message)
+    return({title: "Sign Up Error:", content: error.message, type: "error"})
   }
 
-  if (user) {
-    return (user.email)
+  if (user && user.email) {
+    return ({title: "Confirm Email", content: user.email, type: "success"})
   }
 
   revalidatePath("/", "layout");

@@ -8,6 +8,7 @@ import "@/styles/globals.css";
 
 import { theme } from "../contexts/theme";
 import SessionContextProvider from "@/contexts/SessionContext";
+import { MessageContextProvider, MessageOverlay } from "@/contexts/MessageContext";
 import Copyright from "@/components/Copyright";
 import NavBar from "@/components/NavBar";
 
@@ -28,11 +29,14 @@ export default function RootLayout({
       <AppRouterCacheProvider>
         <ThemeProvider theme={theme}>
           <SessionContextProvider>
-            <body className={inter.className}>
-              <NavBar />
-              <Box id="main-wrapper">{children}</Box>
-              <Copyright />
-            </body>
+            <MessageContextProvider>
+              <body className={inter.className}>
+                <MessageOverlay />
+                <NavBar />
+                <Box id="main-wrapper">{children}</Box>
+                <Copyright />
+              </body>
+            </MessageContextProvider>
           </SessionContextProvider>
         </ThemeProvider>
       </AppRouterCacheProvider>

@@ -1,6 +1,5 @@
 'use client'
-import { createTheme } from "@mui/material/styles";
-import { ThemeOptions } from "@mui/material/styles";
+import { createTheme, responsiveFontSizes, ThemeOptions } from "@mui/material/styles";
 
 export const themeOptions: ThemeOptions = {
   palette: {
@@ -21,4 +20,7 @@ export const themeOptions: ThemeOptions = {
 
 
 
-export const theme = createTheme(themeOptions)
+let theme = createTheme(themeOptions)
+theme = responsiveFontSizes(theme)
+
+export {theme}

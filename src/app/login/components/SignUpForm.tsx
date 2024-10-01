@@ -40,7 +40,6 @@ export default function SignUpForm({
       container
       component="main"
       justifyContent="center"
-      sx={{ height: "50vh" }}
     >
       <CssBaseline />
       <Grid item component={Paper} elevation={6} square>

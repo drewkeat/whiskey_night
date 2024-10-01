@@ -13,7 +13,7 @@ type Props = {}
 export default function NavBar({}: Props) {
   const session = useSession()
   const pathname = usePathname()
-  if(!session?.user || pathname.match("/login") || pathname.match("/error")) return
+  if(pathname.match("/login") || pathname.match("/error")) return
   return (
     <Box sx={{}}>
         <AppBar position="static">

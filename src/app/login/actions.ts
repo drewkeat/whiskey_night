@@ -17,11 +17,11 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    return ({title: "Sign In Error:", content: error.message, type: "warning"})
+    return ({title: "Sign In Error:", content: error.message, type: "error"})
   }
 
-  revalidatePath("/", "layout");
-  redirect("/");
+  revalidatePath("/", "layout")
+  redirect("/")
 }
 
 export async function signup(formData: FormData) {

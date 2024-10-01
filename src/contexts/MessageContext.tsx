@@ -52,6 +52,8 @@ export function MessageOverlay(){
     ({title, content, type} = message);
   }
 
+  content = content.split(' ').map(e => e[0].toUpperCase() + e.slice(1)).join(' ')
+
   return( 
     <Backdrop open sx={{zIndex:1000}} onClick={acknowledgeMessage}>
       <Card raised square={false} elevation={6} sx={{minWidth: "50vw"}}>

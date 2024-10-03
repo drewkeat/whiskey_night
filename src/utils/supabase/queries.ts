@@ -1,21 +1,16 @@
-import { createClient } from "./client";
+import { Tables } from "@/types/supabase_types"
+import {createClient} from "@/utils/supabase/server"
 
-export const supabase = createClient()
+const supabase = createClient()
 
-export async function getAllWhiskeys(){
-  const {data, error} = await supabase.from('whiskey').select()
-  if(error){
-    console.error("Could not fetch all whiskeys")
-    return
-  }
-  return data
+export const getWhiskeys = async () => {
+  const res = await supabase.from('whiskey').select()
+  return res
 }
 
-export async function getWhiskeyById(id: string){
-  const {data, error} = await supabase.from("whiskey").select().eq("id", id)
-  if (error){
-    console.error("Could not fetch whiskey by ID")
-    return 
+export const getWhiskeyImg = (whiskey: Tables<"whiskey">) => {
+  if(whiskey.whiskeyImg){
+    const {data: img} = supabase.storage.from('imgs').getPublicUrl(whiskey.whiskeyImg)
+    return img.publicUrl
   }
-  return (data[0])
 }

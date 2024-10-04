@@ -70,7 +70,7 @@ function NavMenu() {
 
   const buildItems = () => {
     return routes.map((route, i, array) => {
-      return <Link key={route.path} href={route.path}><MenuItem divider={i == array.length-1}>{route.name}</MenuItem></Link>
+      return <Link key={route.path} href={route.path}><MenuItem  onClick={handleClose} divider={i == array.length-1}>{route.name}</MenuItem></Link>
     })
   }
 

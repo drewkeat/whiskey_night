@@ -1,7 +1,6 @@
-import { Typography, Container, Box, Card, List, ListItem } from "@mui/material";
-import Image from "next/image";
-import { getWhiskeys, getWhiskeyImg } from "@/utils/supabase/queries";
-import { ImageNotSupportedOutlined } from "@mui/icons-material";
+import { Typography, Container, List } from "@mui/material";
+import { getWhiskeys } from "@/utils/supabase/queries/serverQueries";
+import WhiskeyListingCard from "./components/WhiskeyListingCard";
 
 export default async function WhiskeyList() {
   const {data: whiskeys, error} = await getWhiskeys()
@@ -10,29 +9,7 @@ export default async function WhiskeyList() {
     if(error){
       throw error
     }
-    return whiskeys.map((whiskey) => {
-      let img;
-      if (whiskey.whiskeyImg) {
-        img = getWhiskeyImg(whiskey)
-      }
-      return (
-        <Card key={`whiskey-${whiskey.id}`} elevation={4}>
-          <ListItem divider>
-            {img ? (
-              <Box sx={{flexGrow: 1}}>
-                <Image
-                  alt={whiskey.name + "-image"}
-                  src={img}
-                  width={50}
-                  height={50}
-                />
-              </Box>
-            ) : (<Box sx={{flexGrow: 1}}><ImageNotSupportedOutlined sx={{width: "50px", height: "50px"}}/></Box>)}
-            <Typography>{whiskey.name}</Typography>
-          </ListItem>
-        </Card>
-      );
-    });
+    return whiskeys.map((whiskey) => <WhiskeyListingCard key={whiskey.id} whiskey={whiskey} />)
   };
 
   return (

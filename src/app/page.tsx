@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       <Typography variant="h3" color={"green"} align="center">
-        This is the home page
+        This is the Phone Branch
       </Typography>
     </>
   );

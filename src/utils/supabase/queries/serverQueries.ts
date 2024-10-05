@@ -8,6 +8,16 @@ export const getWhiskeys = async () => {
   return res
 }
 
+export const getWhiskey = async (whiskeyName: string) => {
+  const supabase = createClient()
+  const {data: whiskey, error} = await supabase.from('whiskey').select().eq('name', whiskeyName)
+  if(error){
+    throw error
+  } else {
+    return whiskey[0]
+  }
+}
+
 export const getWhiskeyImg = (whiskey: Tables<"whiskey">) => {
   const supabase = createClient()
   if(whiskey.whiskeyImg){

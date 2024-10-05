@@ -1,6 +1,7 @@
 "use client"
 import React, {useState, useEffect} from 'react'
 import Image from "next/image"
+import Link from "next/link"
 import {Box, Card, ListItem, Skeleton, Typography} from "@mui/material"
 import { ImageNotSupportedOutlined } from '@mui/icons-material'
 import {Tables} from "@/types/supabase_types"
@@ -23,21 +24,25 @@ const WhiskeyListingCard = ({whiskey}: Props) => {
     return () => {
     }
   }, [img, whiskey])
+
+  const path = "/whiskeys/" + whiskey.name
   
   return (
     <Card key={`whiskey-${whiskey.id}`} elevation={4}>
           <ListItem divider>
             {img ? (
               <Box sx={{flexGrow: 1}}>
-                <Image
-                  alt={whiskey.name + "-image"}
-                  src={img}
-                  width={50}
-                  height={50}
-                />
+                <Link href={path}>
+                  <Image
+                    alt={whiskey.name + "-image"}
+                    src={img}
+                    width={50}
+                    height={50}
+                  />
+                </Link>
               </Box>
             ) : (<Box sx={{flexGrow: 1}}>{loading ? <Skeleton variant='rectangular' sx={{width: "50px", height: "50px"}}/>: <ImageNotSupportedOutlined sx={{width: "50px", height: "50px"}}/>}</Box>)}
-            <Typography>{whiskey.name}</Typography>
+            <Link href={path}><Typography>{whiskey.name}</Typography></Link>
           </ListItem>
         </Card>
   )

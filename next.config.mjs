@@ -8,6 +8,11 @@ const nextConfig = {
         port: '54321',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: '**.supabase.co',
+        pathname: '/**',
+      } 
     ],
   },
 };

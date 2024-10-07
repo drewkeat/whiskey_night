@@ -31,7 +31,7 @@ export default function NavBar() {
   if (pathname.match("/login") || pathname.match("/error")) return;
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" elevation={4}>
       <Toolbar>
         <BrandBadge sx={{ flexGrow: 1 }} />
         <NavMenu />

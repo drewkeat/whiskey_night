@@ -18,7 +18,7 @@ export const getWhiskey = async (whiskeyName: string) => {
   }
 }
 
-export const getWhiskeyImg = (whiskey: Tables<"whiskey">) => {
+export const getWhiskeyImg = (whiskey: Tables<"whiskey">) : string | undefined => {
   const supabase = createClient()
   if(whiskey.whiskeyImg){
     const {data: img} = supabase.storage.from('imgs').getPublicUrl(whiskey.whiskeyImg)

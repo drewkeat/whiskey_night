@@ -10,16 +10,6 @@ import {
   Slider,
   Stack
 } from "@mui/material";
-import {
-  Box,
-  Container,
-  Card,
-  Divider,
-  CardContent,
-  Typography,
-  Slider,
-  Stack
-} from "@mui/material";
 
 import {
   getWhiskey,
@@ -69,103 +59,9 @@ async function WhiskeyDetailsPage({ params }: Props) {
           textAlign={"center"}
           sx={{ ":hover": { backgroundColor: "secondary.light" } }}
         >
-    <Container sx={{ mt: 5 }}>
-      <Card elevation={8} sx={{paddingBottom: 5}}>
-        <Typography
-          variant="h4"
-          bgcolor={"secondary.main"}
-          color={"secondary.contrastText"}
-          padding={1}
-          textAlign={"center"}
-          sx={{ ":hover": { backgroundColor: "secondary.light" } }}
-        >
           {whiskey.name}
         </Typography>
         <Divider variant="fullWidth" />
-        <CardContent>
-          <Box sx={{ display: "flex" }}>
-            <Box flexGrow={1}>
-              <Typography variant="subtitle1">
-                Distillery:
-                <Typography
-                  variant="subtitle1"
-                  component={"span"}
-                  fontStyle={"italic"}
-                >
-                  {" " + whiskey.distillery}
-                </Typography>
-              </Typography>
-              <Typography variant="subtitle1" width={"100%"}>
-                Location:{" "}
-                <Typography
-                  variant="subtitle1"
-                  component={"span"}
-                  fontStyle={"italic"}
-                >
-                  {" " + whiskey.location}
-                </Typography>
-              </Typography>
-            </Box>
-            <Box>
-              <Typography variant="subtitle1">
-                Type:{" "}
-                <Typography
-                  variant="subtitle1"
-                  component={"span"}
-                  fontStyle={"italic"}
-                >
-                  {" " + whiskey.type}
-                </Typography>
-              </Typography>
-              <Typography variant="subtitle1" flexGrow={1}>
-                ABV:
-                <Typography
-                  variant="subtitle1"
-                  component={"span"}
-                  fontStyle={"italic"}
-                >
-                  {" " + whiskey.abv}
-                </Typography>
-              </Typography>
-            </Box>
-          </Box>
-          {whiskeyImage && (
-            <Box
-              display={"flex"}
-              justifyContent={"center"}
-              position={"relative"}
-            >
-              <Image
-                src={whiskeyImage}
-                height={150}
-                width={150}
-                alt={whiskey.name + "-image"}
-              />
-            </Box>
-          )}
-          <Box sx={{ display: "flex", flexWrap: "wrap", padding: 0 }}>
-            <Typography variant="subtitle1" flexGrow={1}>
-              Cask Type:
-              <Typography
-                variant="subtitle1"
-                component={"span"}
-                fontStyle={"italic"}
-              >
-                {" " + whiskey.caskType}
-              </Typography>
-            </Typography>
-            <Typography variant="subtitle1" textAlign={"end"}>
-              Age:
-              <Typography
-                variant="subtitle1"
-                component={"span"}
-                fontStyle={"italic"}
-              >
-                {" " + whiskey.age}
-              </Typography>
-            </Typography>
-          </Box>
-        </CardContent>
         <CardContent>
           <Box sx={{ display: "flex" }}>
             <Box flexGrow={1}>

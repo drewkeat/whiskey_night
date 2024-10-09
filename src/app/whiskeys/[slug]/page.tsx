@@ -49,7 +49,7 @@ async function WhiskeyDetailsPage({ params }: Props) {
               max={100}
               name="read-only"
               disabled
-              sx={{color: 'secondary.main', '& .Mui-disabled': {color: 'primary.main'}}}
+              sx={{color: 'secondary.main', '& .Mui-disabled': {color: 'primary.main'}, width: 2}}
               />
               <Typography>{o[0]}</Typography>
           </Box>

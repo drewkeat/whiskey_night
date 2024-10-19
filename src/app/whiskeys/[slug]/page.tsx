@@ -41,7 +41,7 @@ async function WhiskeyDetailsPage({ params }: Props) {
               disabled
               sx={{color: 'secondary.main', '& .Mui-disabled': {color: 'primary.main'}, width: 2}}
               />
-              <Typography>{o[0]}</Typography>
+              <Typography sx={{transform: {xs: "rotate(90deg) translate(.5rem, -1rem)", md: "none"}}}>{o[0]}</Typography>
           </Box>
         );
       });
@@ -152,9 +152,26 @@ async function WhiskeyDetailsPage({ params }: Props) {
             {whiskey.description}
           </Typography>
         </CardContent>
-        <CardContent sx={{overflowX: "scroll", overflowY: "hidden"}}>
-          {/* {JSON.stringify(whiskey.flavorProfile)} */}
-          <Stack direction={"row"} spacing={1} minHeight={"fit-content"}>{buildProfile()}</Stack>
+        <CardContent
+          sx={{
+            display: {md: "flex"} ,
+            justifyContent: "center"
+          }}
+        >
+          <Stack
+            direction={"row"}
+            spacing={1}
+            minHeight={"fit-content"}
+            paddingBottom={1}
+            sx={{
+              "& > *": {
+                flexShrink: 0,
+                width: { xs: "4%", md: "auto" }
+              }
+            }}
+          >
+            {buildProfile()}
+          </Stack>
         </CardContent>
       </Card>
     </Container>

@@ -11,6 +11,7 @@
     "lint": "next lint",
     "db:migrate-local": "dotenv -e .env.local -- supabase migration up",
     "db:push": "supabase db push",
+    "db:reset": "supabase db reset && supabase storage --local --experimental cp -r ./supabase/seed/whiskey-pics ss:///imgs",
     "scrape-seed": "dotenv -e .env.local -- node supabase/seed/scrape-seed.js",
     "scrape-seed-by-name": "dotenv -e .env.local -- node supabase/seed/scrape-seed-by-name.js"
   },

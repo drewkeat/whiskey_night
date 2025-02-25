@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "db:reset": "supabase db reset && supabase storage --local --experimental cp -r ./supabase/seed/whiskey-pics ss:///imgs",
+    "db:diff": "supabase db diff -f",
     "scrape-seed": "dotenv -e .env.local -- node supabase/seed/scrape-seed.js",
     "scrape-seed-by-name": "dotenv -e .env.local -- node supabase/seed/scrape-seed-by-name.js"
   },

@@ -8,7 +8,7 @@ import {Tables} from "@/types/supabase_types"
 import { getWhiskeyImg } from '@/utils/supabase/queries/clientQueries'
 
 type Props = {
-  whiskey: Tables<"whiskey"> 
+  whiskey: Tables<"whiskeys"> 
 }
 
 const WhiskeyListingCard = ({whiskey}: Props) => {

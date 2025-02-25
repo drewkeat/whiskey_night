@@ -6,7 +6,7 @@ import {Tables} from '@/types/supabase_types'
 import {getWhiskeyImg} from '@/utils/supabase/queries/serverQueries'
 
 type Props = {
-  whiskey: Tables<"whiskey">
+  whiskey: Tables<"whiskeys">
 }
 
 export default function WhiskeyDetailsCard({whiskey}: Props) {

@@ -17,7 +17,6 @@ import {
   ListItemIcon,
 } from "@mui/material";
 import { Logout } from "@mui/icons-material";
-import { SupabaseClient } from "@supabase/supabase-js";
 import { supabaseClient } from "@/utils/supabase/client";
 
 import { useMessageContext } from "@/contexts/MessageContext";

@@ -4,13 +4,13 @@ import {createClient} from "@/utils/supabase/server"
 
 export const getWhiskeys = async () => {
   const supabase = createClient()
-  const res = await supabase.from('whiskey').select()
+  const res = await supabase.from('whiskeys').select()
   return res
 }
 
 export const getWhiskey = async (whiskeyName: string) => {
   const supabase = createClient()
-  const {data: whiskey, error} = await supabase.from('whiskey').select().eq('name', whiskeyName)
+  const {data: whiskey, error} = await supabase.from('whiskeys').select().eq('name', whiskeyName)
   if(error){
     throw error
   } else {
@@ -18,7 +18,7 @@ export const getWhiskey = async (whiskeyName: string) => {
   }
 }
 
-export const getWhiskeyImg = (whiskey: Tables<"whiskey">) : string | undefined => {
+export const getWhiskeyImg = (whiskey: Tables<"whiskeys">) : string | undefined => {
   const supabase = createClient()
   if(whiskey.whiskeyImg){
     const {data: img} = supabase.storage.from('imgs').getPublicUrl(whiskey.whiskeyImg)

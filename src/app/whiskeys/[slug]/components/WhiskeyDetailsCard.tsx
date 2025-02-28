@@ -1,17 +1,23 @@
-import React from 'react'
+'use client'
+
+import {useEffect, useState} from 'react'
 import Image from 'next/image'
 import {Card, Typography, Divider, CardContent, Box, Stack, Slider} from '@mui/material'
 
 import {Tables} from '@/types/supabase_types'
-import {getWhiskeyImg} from '@/utils/supabase/queries/serverQueries'
+import {getWhiskeyImg} from '@/utils/supabase/queries/clientQueries'
 
 type Props = {
   whiskey: Tables<"whiskeys">
 }
 
 export default function WhiskeyDetailsCard({whiskey}: Props) {
+  const [whiskeyImage, setWhiskeyImage] = useState<string>('')
+  useEffect(() => {
+    (async () => await getWhiskeyImg(whiskey))().then(w => setWhiskeyImage(w))
+  }, [whiskey])
   
-  const whiskeyImage = getWhiskeyImg(whiskey);
+  
   const buildProfile = () => {
     if (whiskey.flavorProfile) {
       const options = Object.entries(whiskey.flavorProfile);

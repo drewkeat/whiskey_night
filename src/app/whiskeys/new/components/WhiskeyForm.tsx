@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 import { Box, Button, TextField, MenuItem, Slider, Typography } from '@mui/material';
+import { supabaseClient} from '@/utils/supabase/client';
+
+const supabase = supabaseClient;
 
 const whiskeyTypes = [
   "American Single Malt", "Blended", "Blended Malt", "Bourbon", "Corn", "Flavored Whiskey", 
@@ -15,7 +18,21 @@ const flavorProfileOptions = [
 ];
 
 export default function WhiskeyForm() {
-  const [formData, setFormData] = useState({
+  interface FormData {
+    name: string;
+    type: string;
+    distillery: string;
+    location: string;
+    description: string;
+    whiskeyImage: string;
+    listingOnDistiller: string;
+    age: string;
+    abv: string;
+    caskType: string;
+    flavorProfile: { [key: string]: number };
+  }
+
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     type: '',
     distillery: '',
@@ -29,19 +46,19 @@ export default function WhiskeyForm() {
     flavorProfile: flavorProfileOptions.reduce((acc, flavor) => ({ ...acc, [flavor]: 0 }), {})
   });
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSliderChange = (flavor, value) => {
+  const handleSliderChange = (flavor: string, value: number) => {
     setFormData({ 
       ...formData, 
       flavorProfile: { ...formData.flavorProfile, [flavor]: value } 
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle form submission
     console.log(formData);
@@ -146,7 +163,7 @@ export default function WhiskeyForm() {
             <Typography sx={{ width: '100px' }}>{flavor}</Typography>
             <Slider
               value={formData.flavorProfile[flavor]}
-              onChange={(e, value) => handleSliderChange(flavor, value)}
+              onChange={(e, value) => handleSliderChange(flavor, value as number)}
               step={5}
               marks
               min={0}

@@ -8,13 +8,22 @@ export const getWhiskeys = async () => {
   return res
 }
 
-export const getWhiskey = async (whiskeyName: string) => {
+export const getWhiskey = async (input: string|number) => {
   const supabase = createClient()
-  const {data: whiskey, error} = await supabase.from('whiskeys').select().eq('name', whiskeyName)
-  if(error){
-    throw error
-  } else {
-    return whiskey[0]
+  if (typeof input === 'string') {
+    let {data: whiskey, error} = await supabase.from('whiskeys').select().eq('name', input).single()
+    if(error){
+      throw error
+    } else {
+      return whiskey
+    }
+  } else if (typeof input === 'number') {
+    let {data: whiskey, error} = await supabase.from('whiskeys').select().eq('id', input).single()
+    if(error){
+      throw error
+    } else {
+      return whiskey
+    }
   }
 }
 

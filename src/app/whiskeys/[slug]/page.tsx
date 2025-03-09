@@ -12,12 +12,13 @@ type Props = {
 };
 
 async function WhiskeyDetailsPage({ params }: Props) {
-  const whiskey = await getWhiskey(decodeURI(params.slug));
+  const slug = parseInt(params.slug) || decodeURI(params.slug);
+  const whiskey = await getWhiskey(slug);
 
 
   return (
     <Container sx={{ mt: 5 }}>
-      <WhiskeyDetailsCard whiskey={whiskey}/>
+      {whiskey && <WhiskeyDetailsCard whiskey={whiskey}/>}
     </Container>
   );
 }
